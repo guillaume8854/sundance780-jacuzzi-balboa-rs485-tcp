@@ -524,7 +524,7 @@ class SundanceRS485(BalboaSpaWifi):
                     await self.writer.drain()                        
             elif mtype == CHANNEL_ASSIGNMENT_RESPONCE:
                 #TODO check for magic numbers to be repeated back
-                await setMyChan(data[5])
+                await self.setMyChan(data[5])
                 message_length = 5
                 data = bytearray(7)
                 data[0] = M_STARTEND
@@ -566,7 +566,7 @@ class SundanceRS485(BalboaSpaWifi):
                         await self.writer.drain()
                         #print("sent")
             else:
-                if (mtype == CC_REQ) or  (mtype == STATUS_UPDATE_ALT_16):
+                if (mtype == CC_REQ) or  (mtype == CC_REQ_ALT_17):
                     if not channel in  self.activeChannels:
                         self.activeChannels.append(data[2])
                         print("Active Channels:" + str(self.activeChannels))
@@ -580,7 +580,7 @@ class SundanceRS485(BalboaSpaWifi):
                                 if not chan in self.activeChannels:
                                     await self.setMyChan( chan)
                                     break
-                    if (mtype == STATUS_UPDATE_ALT_16):
+                    if (mtype == CC_REQ_ALT_17):
                         if (data[5]) != 0:
                             self.log.warn("Got Button Press x".format(channel, mid, mtype) + "".join(map("{:02X} ".format, bytes(data))))
                 elif (mtype > NOTHING_TO_SEND) :
