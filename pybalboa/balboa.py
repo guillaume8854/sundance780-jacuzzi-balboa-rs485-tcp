@@ -61,7 +61,7 @@ mtypes = [
 ]
 
 text_heatmode = ["Ready", "Rest", "Ready in Rest"]
-text_heatstate = ["Idle", "Heating", "Heat Waiting"]
+text_heatstate = ["idle", "heating", "Heat Waiting"]
 text_tscale = ["Fahrenheit", "Celcius"]
 text_timescale = ["12h", "24h"]
 text_pump = ["Off", "Low", "High"]
@@ -184,6 +184,8 @@ class BalboaSpaWifi:
         self.filter2_duration_hours = 0
         self.filter2_duration_minutes = 0
         self.log = logging.getLogger(__name__)
+        self.dropped = 0
+        self.crcerror = 0
 
     def to_celsius(self, fahrenheit):
         return .5 * round(((fahrenheit-32) / 1.8) / .5)
@@ -716,17 +718,27 @@ class BalboaSpaWifi:
             return None
 
         if header[0] == M_STARTEND:
-            # header[1] is size, + checksum + M_STARTEND 
-            rlen = header[1]          
+            if header[1] == M_STARTEND:
+                self.dropped = self.dropped + 1
+                tmp = await self.reader.readexactly(1)
+                header = bytes([ M_STARTEND, tmp[0]])
+                rlen = tmp[0]
+            else:
+                # header[1] is size, + checksum + M_STARTEND 
+                rlen = header[1]          
         else:
             if header[1] == M_STARTEND:
-                rlen = await self.reader.readexactly(1)
-            #else:
-            #    print(header.hex())
-            return None
+                self.dropped = self.dropped + 1
+                tmp = await self.reader.readexactly(1)
+                header = bytes([ M_STARTEND, tmp[0]])
+                rlen = tmp[0]
+            else:
+                self.dropped = self.dropped + 2
+                return None
 
         if rlen > 128:
-            print(rlen)
+            print("Length Too Long: {}",format(rlen))
+            self.dropped = self.dropped + 2
             return None
 
         # now get the rest of the data
@@ -739,12 +751,14 @@ class BalboaSpaWifi:
         full_data = header + data
         
         #print("".join(map("{:02X} ".format, bytes(full_data))))
-        #print("".join(map("{:02X} ".format, bytes(full_data))))
-        
+              
         # don't count M_STARTENDs or CHKSUM (remember that rlen is 2 short)
         crc = self.balboa_calc_cs(full_data[1:], rlen-1)
         if crc != full_data[-2]:
+            self.dropped = self.dropped + rlen + 2
+            self.crcerror = self.crcerror + 1
             self.log.error('Message had bad CRC, discarding')
+            print("".join(map("{:02X} ".format, bytes(full_data))))
             return None
 
         #self.log.error('got update: {}'.format(full_data.hex()))

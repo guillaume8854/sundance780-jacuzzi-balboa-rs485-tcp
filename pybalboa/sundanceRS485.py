@@ -22,11 +22,12 @@ EXISTING_CLIENT_RESPONCE = 0x05
 CLEAR_TO_SEND = 0x06
 NOTHING_TO_SEND =  0x07
 
-#So far seem Sundance/Jaccuzi Specific
+#These were found on a Sundance 780 series
 STATUS_UPDATE = 0xC4
 LIGHTS_UPDATE = 0xCA
 CC_REQ = 0xCC
 
+#These are from a Jacuzzi 
 CC_REQ_ALT_17 = 0x17
 STATUS_UPDATE_ALT_16 = 0x16
 LIGHTS_UPDATE_ALT_23 = 0x23
@@ -48,14 +49,16 @@ DETECT_CHANNEL_STATE_CHANNEL_NOT_FOUND = 5 #Wait this man CTS cycles before deci
 NO_CHANGE_REQUESTED = -1 #Used to return control to other devices
 CHECKS_BEFORE_RETRY = 2 #How many status messages we should receive before retrying our command
 
+
+
 class SundanceRS485(BalboaSpaWifi):
+     
+
+
+
     def __init__(self, hostname, port=8899):
         super().__init__(hostname, port)
-        
-        print("Test For @jackbrown1993")
-        
-
-        
+               
         #debug
         logging.basicConfig()
         self.log = logging.getLogger(__name__)
@@ -106,8 +109,56 @@ class SundanceRS485(BalboaSpaWifi):
         self.detectChannelState = DETECT_CHANNEL_STATE_START #STate machine used to find an open channel, or to get us a new one
         self.target_pump_status  = [NO_CHANGE_REQUESTED, NO_CHANGE_REQUESTED, NO_CHANGE_REQUESTED, NO_CHANGE_REQUESTED, NO_CHANGE_REQUESTED, NO_CHANGE_REQUESTED] #Not all messages seem to get accepted, so we have to check if our change compelted and retry if needed
         self.targetTemp = NO_CHANGE_REQUESTED
+        
+        self.targetlightMode = NO_CHANGE_REQUESTED
+        self.targetlightBrightnes = NO_CHANGE_REQUESTED
+        
+        self.attemptsToCommand = 0
+        
         self.checkCounter = 0
+        self.checkCounterL = 0
         self.CAprior_status = None
+        self.lastRGBMode = "White"
+
+        self.HEAT_MODE_MAP = [
+            [32,"AUTO"],
+            [34,"ECO"],
+            [36,"DAY"],
+        ]
+
+        self.DISPLAY_MAP = [
+            [36,"Current Temp"], #Previously Observed
+            [32,"Current Temp"], 
+            [31,"Current Temp"], #Observed while idle 
+            [30,"Set Temp"], #was 36,,,
+            [35,"PF Set Primary Filtration"],
+            [47,"SF Set Secondary Filtration"],
+            [42,"HEAT Set Heat Mode"],
+            [53,"FC Set Filter Change Interval"],
+            [48,"UV Set Change Interval"],
+            [51,"H2O Set Water Change Interval"],
+            [62,"TIME Set Time"],
+            [59,"DATE Set Date"],
+            [0,"TEMP Set Temperature Units"],
+            [3,"LANG Set Language"],
+            [14,"LOCK Set Panel Lock"],
+        ]
+
+        self.LIGHT_MODE_MAP = [
+            [128,"Fast Blend"], #with 2 second constant
+            [127,"Slow Blend"], #wiht 4 secodn constant
+            [255,"Frozen Blend"],
+            [2,"BLue"],
+            [7,"Violet"],
+            [6,"Red"],
+            [8,"Amber"],
+            [3,"Green"],
+            [9,"Aqua"],
+            [1,"White"],
+            [0,"Off"],
+            [-1,"No Change"],
+        ]
+       
 
  
     async def connect(self):
@@ -139,23 +190,12 @@ class SundanceRS485(BalboaSpaWifi):
         ):
             self.log.error("Attempt to set temperature outside of heat mode boundary")
             return
-  
+        self.attemptsToCommand = 0
         self.targetTemp = newtemp
 
     async def change_light(self, light, newstate):
-        """ Change light #light to newstate. """
-        # sanity check
-        if (
-            light > 1
-            or not self.light_array[light]
-            or self.light_status[light] == newstate
-        ):
-            return
-
-        if light == 0:
-            await self.send_CCmessage(241) #Lights Brightness Button
-        else: 
-            await self.send_CCmessage(242) #Lights Color Button
+        self.log.info("Not supported with New Format messaging")
+        return 
 
     async def change_pump(self, pump, newstate):
         """ Change pump #pump to newstate. """
@@ -167,7 +207,7 @@ class SundanceRS485(BalboaSpaWifi):
             or self.pump_status[pump] == newstate
         ):
             return
-        
+        self.attemptsToCommand = 0
         self.target_pump_status[pump] = newstate
         
     async def send_CCmessage(self, val):
@@ -181,6 +221,9 @@ class SundanceRS485(BalboaSpaWifi):
         if self.channel is None:
             self.log.info("Tried to send CC message without having been assigned a channel")
             return
+            
+        if self.attemptsToCommand > 16:
+            self.log.info("Tried {} times to change state {} giving up.", self.attemptsToCommand, val)
             
         # Exampl: 7E 07 10 BF CC 65 85 A6 7E 
         message_length = 7
@@ -197,6 +240,8 @@ class SundanceRS485(BalboaSpaWifi):
 
         self.log.debug(f"queueing message: {data.hex()}")
         self.queue.put(data)
+        
+        self.attemptsToCommand += 1
 
     async def send_message(self, *bytes):
         """ Sends a message to the spa with variable length bytes. """
@@ -308,30 +353,12 @@ class SundanceRS485(BalboaSpaWifi):
         self.heatState2  =  (data[HEATER_FIELD_2] >> HEATER_SHIFT_1) & 1  
         
         DISPLAY_FIELD = 13
-        DISPLAY_MAP = [
-            [36,"Temp"],
-            [35,"PF"],
-            [47,"SF"],
-            [42,"Heat"],
-            [53,"FC"],
-            [48,"UV"],
-            [51,"H2O"],
-            [62,"Time"],
-            [59,"Date"],
-            [0,"Temp"],
-            [3,"Lang"],
-            [14,"Lock"],
-        ]
-        
+
         #TODO Convert to text
         self.displayText = data[DISPLAY_FIELD]
  
         HEAT_MODE_FIELD = 6 #
-        HEAT_MODE_MAP = [
-            [32,"AUTO"],
-            [34,"ECO"],
-            [36,"DAY"],
-        ]
+
         
         #TODO Convert to text
         self.heatMode = data[HEAT_MODE_FIELD]
@@ -358,39 +385,35 @@ class SundanceRS485(BalboaSpaWifi):
         self.UnknownField9 = data[UNKOWN_FIELD_9]
 
         #FIND OUT IF OUR LAST COMMAND WORKED...
-        sendCmd = False
-        if(self.settemp  != self.targetTemp and self.targetTemp != NO_CHANGE_REQUESTED and self.checkCounter > CHECKS_BEFORE_RETRY):
-            if self.targetTemp < self.settemp:
-                await self.send_CCmessage(226) #Temp Down Key
-            else:
-                await self.send_CCmessage(225) #Temp Up Key
-            self.checkCounter = 0
-        elif self.settemp  == self.targetTemp:
-            self.targetTemp = NO_CHANGE_REQUESTED
-        else: 
-            sendCmd = True
+        if self.checkCounter > 0:
+            self.checkCounter -= 1
             
-
-        for i in range(0,len(self.target_pump_status)):
-            if self.pump_status[i] != self.target_pump_status[i] and self.target_pump_status[i] != NO_CHANGE_REQUESTED:
-                if self.checkCounter > CHECKS_BEFORE_RETRY:
+        if (self.checkCounter == 0):
+            if(self.settemp  != self.targetTemp and self.targetTemp != NO_CHANGE_REQUESTED):
+                if self.targetTemp < self.settemp:
+                    await self.send_CCmessage(226) #Temp Down Key
+                else:
+                    await self.send_CCmessage(225) #Temp Up Key
+                self.checkCounter = CHECKS_BEFORE_RETRY
+            elif self.settemp  == self.targetTemp:
+                self.targetTemp = NO_CHANGE_REQUESTED
+                
+        if (self.checkCounter == 0):
+            for i in range(0,len(self.target_pump_status)):
+                if self.pump_status[i] != self.target_pump_status[i] and self.target_pump_status[i] != NO_CHANGE_REQUESTED:
                     if i == 0:
                         await self.send_CCmessage(228) #Pump 1 Button
                     elif i == 1: 
                         await self.send_CCmessage(229) #Pump 2 Button
                     else:
                         await self.send_CCmessage(239) #Clear Ray / Circulating Pump
-                    self.checkCounter = NO_CHANGE_REQUESTED
-            elif self.pump_status[i] == self.target_pump_status[i]:
-                self.target_pump_status[i] = -1
-            else:
-                sendCmd = True
-                
-        if sendCmd:
-            self.checkCounter += 1
-
+                    self.checkCounter = CHECKS_BEFORE_RETRY
+                elif self.pump_status[i] == self.target_pump_status[i]:
+                    self.target_pump_status[i] = NO_CHANGE_REQUESTED
+              
         if not have_new_data:
              return
+             
         self.log.info("C4{}".format(data))
              
         self.lastupd = time.time()
@@ -414,19 +437,7 @@ class SundanceRS485(BalboaSpaWifi):
         #TODO: The rest...
         
         LIGHT_MODE_FIELD = 0 #TBD
-        DISPLAY_MAP = [
-            [128,"Fast Blend"], #with 2 second constant
-            [127,"Slow Blend"], #wiht 4 secodn constant
-            [255,"Frozen Blend"],
-            [2,"BLue"],
-            [7,"Violet"],
-            [6,"Red"],
-            [8,"Amber"],
-            [3,"Green"],
-            [9,"Aqua"],
-            [1,"White"],
-        ]
-        
+     
         self.lightBrightnes = data[1]
         self.lightMode = data[4]
         self.lightB = data[2]
@@ -439,6 +450,26 @@ class SundanceRS485(BalboaSpaWifi):
         self.lightUnknown7 = data[7]
         self.lightUnknown9 = data[9]
         
+       
+        if self.checkCounterL > 0:
+            self.checkCounterL -= 1
+        
+        if (self.checkCounterL == 0):
+            if(self.targetlightMode  != self.lightMode and self.targetlightMode != NO_CHANGE_REQUESTED):
+                await self.send_CCmessage(BTN_LIGHT_COLOR) 
+                self.checkCounterL = CHECKS_BEFORE_RETRY
+            elif self.targetlightMode  == self.lightMode:
+                self.targetlightMode = NO_CHANGE_REQUESTED
+
+        if (self.checkCounterL == 0):
+            if(self.targetlightBrightnes  != self.lightBrightnes and self.targetlightBrightnes != NO_CHANGE_REQUESTED):
+                await self.send_CCmessage(BTN_LIGHT_ON) 
+                print("brigtness button pressed")
+                self.checkCounterL = CHECKS_BEFORE_RETRY
+            elif self.targetlightBrightnes  == self.lightBrightnes:
+                self.targetlightBrightnes = NO_CHANGE_REQUESTED                
+
+
         have_new_data = False
         if self.CAprior_status is not None:
             for i in range(0, len(data)):
@@ -448,10 +479,13 @@ class SundanceRS485(BalboaSpaWifi):
         else:
             have_new_data = True
             self.CAprior_status = bytearray(len(data))
+
         
         if not have_new_data:
              return
+             
         self.log.info("CA{}".format(data))
+        self.lastupd = time.time()
         for i in range(0, len(data)):
             self.CAprior_status[i] = data[i]
         
@@ -556,6 +590,11 @@ class SundanceRS485(BalboaSpaWifi):
                 if not channel in  self.discoveredChannels:
                     self.discoveredChannels.append(data[2])
                     #print("Discovered Channels:" + str(self.discoveredChannels))
+                    #detec conflict
+                    if data[2] == self.channel:
+                        print("Found a channel conflict, getting a new channel")
+                        self.channel = None
+                        self.detectChannelState = DETECT_CHANNEL_STATE_START
                 elif channel == self.channel:
                     if self.queue.empty():
                         #self.writer.write(self.NTS)
@@ -564,7 +603,7 @@ class SundanceRS485(BalboaSpaWifi):
                         msg = self.queue.get()
                         self.writer.write(msg)
                         await self.writer.drain()
-                        #print("sent")
+                        print("sent")
             else:
                 if (mtype == CC_REQ) or  (mtype == CC_REQ_ALT_17):
                     if not channel in  self.activeChannels:
@@ -583,6 +622,10 @@ class SundanceRS485(BalboaSpaWifi):
                     if (mtype == CC_REQ_ALT_17):
                         if (data[5]) != 0:
                             self.log.warn("Got Button Press x".format(channel, mid, mtype) + "".join(map("{:02X} ".format, bytes(data))))
+                    if (mtype == CC_REQ):
+                        buttondata = data[5]^data[6]
+                        if buttondata != 224:
+                            self.log.warn("Got Button Press {} {} : ".format(data[5]^data[6]^1, buttondata) + "".join(map("{:02X} ".format, bytes(data))))
                 elif (mtype > NOTHING_TO_SEND) :
                     self.log.warn("Unknown Message {:02X} {:02X} {:02X} x".format(channel, mid, mtype) + "".join(map("{:02X} ".format, bytes(data))))
               
@@ -649,9 +692,23 @@ class SundanceRS485(BalboaSpaWifi):
         
     def get_lightB(self):  
         return self.lightB 
+         
+    async def change_rgbbrightness(self, light, newstate):
+        if newstate < 15:
+            newstate = 0
+        if newstate < 50:
+            newstate = 33
+        else:
+            newstate = 100
+        self.attemptsToCommand = 0    
+        self.targetlightBrightnes = newstate
+   
+    async def change_rgbmode(self, light, newstate):
+        self.attemptsToCommand = 0
         
-        
-   
-   
-   
-   
+        newmode = -1
+        for x,y in self.LIGHT_MODE_MAP:
+            if y == newstate:
+                newmode = x 
+        print("RGBMode Change To: {} {} ".format(newmode,newstate))
+        self.targetlightMode = newmode
