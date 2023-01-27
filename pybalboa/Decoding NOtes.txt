@@ -1,0 +1,1245 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\peter> cd N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\py
+cd : Cannot find path 'N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\py' because it does not exist.
+At line:1 char:1
++ cd N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\py
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (N:\home\pi\sund...oa-rs485-tcp\py:String) [Set-Location], ItemNotFoundE
+   xception
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand
+
+PS C:\Users\peter> cd N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 2, in <module>
+    import sundanceRS485
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py", line 466
+    if(self.prior_status[i] != data[i])
+                                       ^
+SyntaxError: expected ':'
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 2, in <module>
+    import sundanceRS485
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py", line 748
+    if newstate = <16.5:
+                ^
+SyntaxError: invalid syntax
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=524, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 54365), raddr=('192.168.50.53', 8899)>
+Connected to MQTT.
+INFO:sundanceRS485:Active Channels:[16]
+DEBUG:sundanceRS485:circ_pump_status 0 1
+DEBUG:sundanceRS485:settemp 0.0 80.0
+DEBUG:sundanceRS485:curtemp 0.0 91.0
+DEBUG:sundanceRS485:displayText -1 23
+DEBUG:sundanceRS485:heatMode -1 32
+DEBUG:sundanceRS485:month -1 1
+DEBUG:sundanceRS485:day -1 13
+DEBUG:sundanceRS485:autoCirc -1 1
+DEBUG:sundanceRS485:manualCirc -1 0
+DEBUG:sundanceRS485:temp2 -1 122.0
+INFO:sundanceRS485:
+Time: 2023-01-13 08:34:47
+INFO:sundanceRS485:Unknown Change: False C4: [14, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 52, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 0 Old: 0 New: 14
+INFO:sundanceRS485:Changed Field: 1 Old: 0 New: 96
+INFO:sundanceRS485:Changed Field: 2 Old: 0 New: 5
+INFO:sundanceRS485:Changed Field: 3 Old: 0 New: 241
+INFO:sundanceRS485:Changed Field: 4 Old: 0 New: 69
+INFO:sundanceRS485:Changed Field: 5 Old: 0 New: 89
+INFO:sundanceRS485:Changed Field: 6 Old: 0 New: 32
+INFO:sundanceRS485:Changed Field: 7 Old: 0 New: 105
+INFO:sundanceRS485:Changed Field: 8 Old: 0 New: 80
+INFO:sundanceRS485:Changed Field: 9 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 10 Old: 0 New: 128
+INFO:sundanceRS485:Changed Field: 11 Old: 0 New: 52
+INFO:sundanceRS485:Changed Field: 12 Old: 0 New: 2
+INFO:sundanceRS485:Changed Field: 13 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 14 Old: 0 New: 122
+INFO:sundanceRS485:H:8 M:52 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23  heatMode:32  month:1  day:13
+INFO:sundanceRS485:unknownCirc:1 heatState2:1 temp2:122.0 UnknownField3:241  UnknownField9:23
+INFO:sundanceRS485:Got assigned channel = 17
+INFO:sundanceRS485:CA[189, 0, 0, 60, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:sundanceRS485:temp2 122.0 154.0
+DEBUG:sundanceRS485:temp2 154.0 155.0
+DEBUG:sundanceRS485:temp2 155.0 154.0
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=500, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 54381), raddr=('192.168.50.53', 8899)>
+Connected to MQTT.
+INFO:sundanceRS485:Active Channels:[16]
+DEBUG:sundanceRS485:circ_pump_status 0 1
+DEBUG:sundanceRS485:settemp 0.0 80.0
+DEBUG:sundanceRS485:curtemp 0.0 91.0
+DEBUG:sundanceRS485:displayText -1 23
+DEBUG:sundanceRS485:heatMode -1 32
+DEBUG:sundanceRS485:month -1 1
+DEBUG:sundanceRS485:day -1 13
+DEBUG:sundanceRS485:autoCirc -1 1
+DEBUG:sundanceRS485:manualCirc -1 0
+DEBUG:sundanceRS485:temp2 Old -1  New 122.0, Temp 1 91.0
+INFO:sundanceRS485:
+Time: 2023-01-13 08:37:29
+INFO:sundanceRS485:Unknown Change: False C4: [14, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 55, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 0 Old: 0 New: 14
+INFO:sundanceRS485:Changed Field: 1 Old: 0 New: 96
+INFO:sundanceRS485:Changed Field: 2 Old: 0 New: 5
+INFO:sundanceRS485:Changed Field: 3 Old: 0 New: 241
+INFO:sundanceRS485:Changed Field: 4 Old: 0 New: 69
+INFO:sundanceRS485:Changed Field: 5 Old: 0 New: 89
+INFO:sundanceRS485:Changed Field: 6 Old: 0 New: 32
+INFO:sundanceRS485:Changed Field: 7 Old: 0 New: 105
+INFO:sundanceRS485:Changed Field: 8 Old: 0 New: 80
+INFO:sundanceRS485:Changed Field: 9 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 10 Old: 0 New: 128
+INFO:sundanceRS485:Changed Field: 11 Old: 0 New: 55
+INFO:sundanceRS485:Changed Field: 12 Old: 0 New: 2
+INFO:sundanceRS485:Changed Field: 13 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 14 Old: 0 New: 122
+INFO:sundanceRS485:H:8 M:55 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23  heatMode:32  month:1  day:13
+INFO:sundanceRS485:unknownCirc:1 heatState2:1 temp2:122.0 UnknownField3:241  UnknownField9:23
+INFO:sundanceRS485:Got assigned channel = 17
+INFO:sundanceRS485:CA[189, 0, 0, 60, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:sundanceRS485:temp2 Old 122.0  New 154.0, Temp 1 91.0
+INFO:sundanceRS485:
+Time: 2023-01-13 08:38:10
+INFO:sundanceRS485:Unknown Change: False C4: [14, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 56, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 11 Old: 55 New: 56
+INFO:sundanceRS485:H:8 M:56 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23  heatMode:32  month:1  day:13
+INFO:sundanceRS485:unknownCirc:1 heatState2:1 temp2:154.0 UnknownField3:241  UnknownField9:23
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=548, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 54474), raddr=('192.168.50.53', 8899)>
+Connected to MQTT.
+INFO:sundanceRS485:Active Channels:[16]
+INFO:sundanceRS485:CA[189, 0, 0, 60, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0]
+INFO:sundanceRS485:Got assigned channel = 17
+DEBUG:sundanceRS485:circ_pump_status 0 1
+DEBUG:sundanceRS485:settemp 0.0 80.0
+DEBUG:sundanceRS485:curtemp 0.0 91.0
+DEBUG:sundanceRS485:displayText -1 23
+DEBUG:sundanceRS485:heatMode -1 32
+DEBUG:sundanceRS485:month -1 1
+DEBUG:sundanceRS485:day -1 13
+DEBUG:sundanceRS485:autoCirc -1 1
+DEBUG:sundanceRS485:manualCirc -1 0
+DEBUG:sundanceRS485:temp2 Old -1  New 122.0, Temp 1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 08:45:02
+INFO:sundanceRS485:Unknown Change: False C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 2, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 0 Old: 0 New: 15
+INFO:sundanceRS485:Changed Field: 1 Old: 0 New: 96
+INFO:sundanceRS485:Changed Field: 2 Old: 0 New: 5
+INFO:sundanceRS485:Changed Field: 3 Old: 0 New: 241
+INFO:sundanceRS485:Changed Field: 4 Old: 0 New: 69
+INFO:sundanceRS485:Changed Field: 5 Old: 0 New: 89
+INFO:sundanceRS485:Changed Field: 6 Old: 0 New: 32
+INFO:sundanceRS485:Changed Field: 7 Old: 0 New: 105
+INFO:sundanceRS485:Changed Field: 8 Old: 0 New: 80
+INFO:sundanceRS485:Changed Field: 9 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 10 Old: 0 New: 128
+INFO:sundanceRS485:Changed Field: 11 Old: 0 New: 2
+INFO:sundanceRS485:Changed Field: 12 Old: 0 New: 2
+INFO:sundanceRS485:Changed Field: 13 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 14 Old: 0 New: 122
+INFO:sundanceRS485:H:9 M:2 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23  heatMode:32  month:1  day:13
+INFO:sundanceRS485:unknownCirc:1 heatState2:1 temp2:122.0 UnknownField3:241  UnknownField9:23
+DEBUG:sundanceRS485:temp2 Old 122.0  New 154.0, Temp 1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 08:45:09
+INFO:sundanceRS485:Unknown Change: False C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 3, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 11 Old: 2 New: 3
+INFO:sundanceRS485:H:9 M:3 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23  heatMode:32  month:1  day:13
+INFO:sundanceRS485:unknownCirc:1 heatState2:1 temp2:154.0 UnknownField3:241  UnknownField9:23
+DEBUG:sundanceRS485:temp2 Old 154.0  New 155.0, Temp 1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 08:46:02
+INFO:sundanceRS485:Unknown Change: False C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 3, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 122 New: 123
+INFO:sundanceRS485:H:9 M:3 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23  heatMode:32  month:1  day:13
+INFO:sundanceRS485:unknownCirc:1 heatState2:1 temp2:155.0 UnknownField3:241  UnknownField9:23
+DEBUG:sundanceRS485:temp2 Old 155.0  New 154.0, Temp 1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 08:46:02
+INFO:sundanceRS485:Unknown Change: False C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 3, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 122
+INFO:sundanceRS485:H:9 M:3 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23  heatMode:32  month:1  day:13
+INFO:sundanceRS485:unknownCirc:1 heatState2:1 temp2:154.0 UnknownField3:241  UnknownField9:23
+DEBUG:sundanceRS485:temp2 Old 154.0  New 155.0, Temp 1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 08:47:11
+INFO:sundanceRS485:Unknown Change: False C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 5, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 122 New: 123
+INFO:sundanceRS485:H:9 M:5 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23  heatMode:32  month:1  day:13
+INFO:sundanceRS485:unknownCirc:1 heatState2:1 temp2:155.0 UnknownField3:241  UnknownField9:23
+DEBUG:sundanceRS485:temp2 Old 155.0  New 154.0, Temp 1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 08:47:13
+INFO:sundanceRS485:Unknown Change: False C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 5, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 122
+INFO:sundanceRS485:H:9 M:5 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23  heatMode:32  month:1  day:13
+INFO:sundanceRS485:unknownCirc:1 heatState2:1 temp2:154.0 UnknownField3:241  UnknownField9:23
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=348, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 54498), raddr=('192.168.50.53', 8899)>
+Connected to MQTT.
+INFO:sundanceRS485:Active Channels:[16]
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-2' coro=<SundanceRS485.listen() done, defined at N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py:588> exception=NameError("name 'spa' is not defined")>
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py", line 618, in listen
+    await self.parse_CA_light_status_update(data)
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py", line 530, in parse_CA_light_status_update
+    for x,y in spa.LIGHT_MODE_MAP:
+NameError: name 'spa' is not defined
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=516, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 54504), raddr=('192.168.50.53', 8899)>
+Connected to MQTT.
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-2' coro=<SundanceRS485.listen() done, defined at N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py:588> exception=NameError("name 'LIGHT_MODE_MAP' is not defined")>
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py", line 618, in listen
+    await self.parse_CA_light_status_update(data)
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py", line 530, in parse_CA_light_status_update
+    for x,y in LIGHT_MODE_MAP:
+NameError: name 'LIGHT_MODE_MAP' is not defined
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=516, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 54510), raddr=('192.168.50.53', 8899)>
+Connected to MQTT.
+INFO:sundanceRS485:Active Channels:[16]
+DEBUG:sundanceRS485:circ_pump_status 0 1
+DEBUG:sundanceRS485:settemp 0.0 80.0
+DEBUG:sundanceRS485:curtemp 0.0 91.0
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-2' coro=<SundanceRS485.listen() done, defined at N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py:588> exception=AttributeError("'SundanceRS485' object has no attribute 'displayTextS'")>
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py", line 616, in listen
+    await self.parse_C4status_update(data)
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py", line 431, in parse_C4status_update
+    self.log.debug("displayText {} {} {} {}".format( self.displayText, self.displayTextS, displayText,  displayTextS))
+AttributeError: 'SundanceRS485' object has no attribute 'displayTextS'
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=496, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 54516), raddr=('192.168.50.53', 8899)>
+INFO:sundanceRS485:Active Channels:[16]
+Connected to MQTT.
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-2' coro=<SundanceRS485.listen() done, defined at N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py:591> exception=NameError("name 'lightMode' is not defined")>
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py", line 621, in listen
+    await self.parse_CA_light_status_update(data)
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py", line 534, in parse_CA_light_status_update
+    if x == lightMode:
+NameError: name 'lightMode' is not defined
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=436, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 54522), raddr=('192.168.50.53', 8899)>
+Connected to MQTT.
+INFO:sundanceRS485:Active Channels:[16]
+INFO:sundanceRS485:CA[189, 0, 0, 60, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0]
+INFO:sundanceRS485:Got assigned channel = 17
+DEBUG:sundanceRS485:circ_pump_status 0 1
+DEBUG:sundanceRS485:settemp 0.0 80.0
+DEBUG:sundanceRS485:curtemp 0.0 91.0
+DEBUG:sundanceRS485:displayText -1 unknown 23 unknown
+DEBUG:sundanceRS485:heatMode -1 unknown 32 AUTO
+DEBUG:sundanceRS485:month -1 1
+DEBUG:sundanceRS485:day -1 13
+DEBUG:sundanceRS485:autoCirc -1 1
+DEBUG:sundanceRS485:manualCirc -1 0
+DEBUG:sundanceRS485:temp2 Old -1  New 122.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:09:05
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 26, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 0 Old: 0 New: 15
+INFO:sundanceRS485:Changed Field: 1 Old: 0 New: 96
+INFO:sundanceRS485:Changed Field: 2 Old: 0 New: 5
+INFO:sundanceRS485:Changed Field: 3 Old: 0 New: 241
+INFO:sundanceRS485:Changed Field: 4 Old: 0 New: 69
+INFO:sundanceRS485:Changed Field: 5 Old: 0 New: 89
+INFO:sundanceRS485:Changed Field: 6 Old: 0 New: 32
+INFO:sundanceRS485:Changed Field: 7 Old: 0 New: 105
+INFO:sundanceRS485:Changed Field: 8 Old: 0 New: 80
+INFO:sundanceRS485:Changed Field: 9 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 10 Old: 0 New: 128
+INFO:sundanceRS485:Changed Field: 11 Old: 0 New: 26
+INFO:sundanceRS485:Changed Field: 12 Old: 0 New: 2
+INFO:sundanceRS485:Changed Field: 13 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 14 Old: 0 New: 122
+INFO:sundanceRS485:1-13 9:26 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:122.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 122.0  New 154.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:09:09
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 27, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 11 Old: 26 New: 27
+INFO:sundanceRS485:1-13 9:27 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 154.0  New 155.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:15:49
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 33, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 122 New: 123
+INFO:sundanceRS485:1-13 9:33 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 155.0  New 154.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:15:50
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 33, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 122
+INFO:sundanceRS485:1-13 9:33 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=508, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 54745), raddr=('192.168.50.53', 8899)>
+Connected to MQTT.
+INFO:sundanceRS485:Active Channels:[16]
+INFO:sundanceRS485:CA[189, 0, 0, 60, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0]
+INFO:sundanceRS485:Got assigned channel = 17
+DEBUG:sundanceRS485:circ_pump_status 0 1
+DEBUG:sundanceRS485:settemp 0.0 80.0
+DEBUG:sundanceRS485:curtemp 0.0 91.0
+DEBUG:sundanceRS485:displayText -1 unknown 23 Current Temp
+DEBUG:sundanceRS485:heatMode -1 unknown 32 AUTO
+DEBUG:sundanceRS485:month -1 1
+DEBUG:sundanceRS485:day -1 13
+DEBUG:sundanceRS485:autoCirc -1 1
+DEBUG:sundanceRS485:manualCirc -1 0
+DEBUG:sundanceRS485:temp2 Old -1  New 122.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:19:01
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 36, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 0 Old: 0 New: 15
+INFO:sundanceRS485:Changed Field: 1 Old: 0 New: 96
+INFO:sundanceRS485:Changed Field: 2 Old: 0 New: 5
+INFO:sundanceRS485:Changed Field: 3 Old: 0 New: 241
+INFO:sundanceRS485:Changed Field: 4 Old: 0 New: 69
+INFO:sundanceRS485:Changed Field: 5 Old: 0 New: 89
+INFO:sundanceRS485:Changed Field: 6 Old: 0 New: 32
+INFO:sundanceRS485:Changed Field: 7 Old: 0 New: 105
+INFO:sundanceRS485:Changed Field: 8 Old: 0 New: 80
+INFO:sundanceRS485:Changed Field: 9 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 10 Old: 0 New: 128
+INFO:sundanceRS485:Changed Field: 11 Old: 0 New: 36
+INFO:sundanceRS485:Changed Field: 12 Old: 0 New: 2
+INFO:sundanceRS485:Changed Field: 13 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 14 Old: 0 New: 122
+INFO:sundanceRS485:1-13 9:36 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:122.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 122.0  New 154.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:19:09
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 37, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 11 Old: 36 New: 37
+INFO:sundanceRS485:1-13 9:37 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=568, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 54786), raddr=('192.168.50.53', 8899)>
+INFO:sundanceRS485:Active Channels:[16]
+Connected to MQTT.
+INFO:sundanceRS485:Got assigned channel = 17
+INFO:sundanceRS485:CA[189, 0, 0, 60, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:sundanceRS485:circ_pump_status 0 1
+DEBUG:sundanceRS485:settemp 0.0 80.0
+DEBUG:sundanceRS485:curtemp 0.0 91.0
+DEBUG:sundanceRS485:displayText -1 unknown 23 Current Temp
+DEBUG:sundanceRS485:heatMode -1 unknown 32 AUTO
+DEBUG:sundanceRS485:month -1 1
+DEBUG:sundanceRS485:day -1 13
+DEBUG:sundanceRS485:autoCirc -1 1
+DEBUG:sundanceRS485:manualCirc -1 0
+DEBUG:sundanceRS485:temp2 Old -1  New 122.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:22:08
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 39, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 0 Old: 0 New: 15
+INFO:sundanceRS485:Changed Field: 1 Old: 0 New: 96
+INFO:sundanceRS485:Changed Field: 2 Old: 0 New: 5
+INFO:sundanceRS485:Changed Field: 3 Old: 0 New: 241
+INFO:sundanceRS485:Changed Field: 4 Old: 0 New: 69
+INFO:sundanceRS485:Changed Field: 5 Old: 0 New: 89
+INFO:sundanceRS485:Changed Field: 6 Old: 0 New: 32
+INFO:sundanceRS485:Changed Field: 7 Old: 0 New: 105
+INFO:sundanceRS485:Changed Field: 8 Old: 0 New: 80
+INFO:sundanceRS485:Changed Field: 9 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 10 Old: 0 New: 128
+INFO:sundanceRS485:Changed Field: 11 Old: 0 New: 39
+INFO:sundanceRS485:Changed Field: 12 Old: 0 New: 2
+INFO:sundanceRS485:Changed Field: 13 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 14 Old: 0 New: 122
+INFO:sundanceRS485:1-13 9:39 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:122.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 122.0  New 154.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:22:09
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 40, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 11 Old: 39 New: 40
+INFO:sundanceRS485:1-13 9:40 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 154.0  New 155.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:22:51
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 40, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 122 New: 123
+INFO:sundanceRS485:1-13 9:40 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 155.0  New 154.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:22:52
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 40, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 122
+INFO:sundanceRS485:1-13 9:40 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 154.0  New 155.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:22:53
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 40, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 122 New: 123
+INFO:sundanceRS485:1-13 9:40 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 155.0  New 154.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:22:53
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 40, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 122
+INFO:sundanceRS485:1-13 9:40 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+MQTT message received on topic: hottub/temperature_command_topic with value: 101.0
+N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py:69: DeprecationWarning: There is no current event loop
+  loop = asyncio.get_event_loop()
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:displayText 23 Current Temp 22 unknown
+INFO:sundanceRS485:Time: 2023-01-13 09:24:09
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 80, 23, 128, 42, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 2 Old: 5 New: 37
+INFO:sundanceRS485:Changed Field: 13 Old: 23 New: 22
+INFO:sundanceRS485:1-13 9:42 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:displayText 22 unknown 23 Current Temp
+INFO:sundanceRS485:Time: 2023-01-13 09:24:14
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 42, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 2 Old: 37 New: 5
+INFO:sundanceRS485:Changed Field: 13 Old: 22 New: 23
+INFO:sundanceRS485:1-13 9:42 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:sent
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=520, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 54826), raddr=('192.168.50.53', 8899)>
+Connected to MQTT.
+INFO:sundanceRS485:Active Channels:[16]
+INFO:sundanceRS485:Got assigned channel = 17
+DEBUG:sundanceRS485:circ_pump_status 0 1
+DEBUG:sundanceRS485:settemp 0.0 80.0
+DEBUG:sundanceRS485:curtemp 0.0 91.0
+DEBUG:sundanceRS485:displayText -1 unknown 23 Current Temp
+DEBUG:sundanceRS485:heatMode -1 unknown 32 AUTO
+DEBUG:sundanceRS485:month -1 1
+DEBUG:sundanceRS485:day -1 13
+DEBUG:sundanceRS485:autoCirc -1 1
+DEBUG:sundanceRS485:manualCirc -1 0
+DEBUG:sundanceRS485:temp2 Old -1  New 122.0 Temp1 91.0
+INFO:sundanceRS485:Time: 1969-12-31 16:00:00
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 43, 2, 23, 122, 0]
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-2' coro=<SundanceRS485.listen() done, defined at N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py:595> exception=TypeError("'NoneType' object is not subscriptable")>
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py", line 623, in listen
+    await self.parse_C4status_update(data)
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\sundanceRS485.py", line 478, in parse_C4status_update
+    if(self.prior_status[i] != data[i]):
+TypeError: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=496, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 54835), raddr=('192.168.50.53', 8899)>
+Connected to MQTT.
+INFO:sundanceRS485:Active Channels:[16]
+DEBUG:sundanceRS485:circ_pump_status 0 1
+DEBUG:sundanceRS485:settemp 0.0 80.0
+DEBUG:sundanceRS485:curtemp 0.0 91.0
+DEBUG:sundanceRS485:displayText -1 unknown 23 Current Temp
+DEBUG:sundanceRS485:heatMode -1 unknown 32 AUTO
+DEBUG:sundanceRS485:month -1 1
+DEBUG:sundanceRS485:day -1 13
+DEBUG:sundanceRS485:autoCirc -1 1
+DEBUG:sundanceRS485:manualCirc -1 0
+DEBUG:sundanceRS485:temp2 Old -1  New 122.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:26:30
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 80, 23, 128, 44, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 0 Old: 0 New: 15
+INFO:sundanceRS485:Changed Field: 1 Old: 0 New: 96
+INFO:sundanceRS485:Changed Field: 2 Old: 0 New: 5
+INFO:sundanceRS485:Changed Field: 3 Old: 0 New: 241
+INFO:sundanceRS485:Changed Field: 4 Old: 0 New: 69
+INFO:sundanceRS485:Changed Field: 5 Old: 0 New: 89
+INFO:sundanceRS485:Changed Field: 6 Old: 0 New: 32
+INFO:sundanceRS485:Changed Field: 7 Old: 0 New: 105
+INFO:sundanceRS485:Changed Field: 8 Old: 0 New: 80
+INFO:sundanceRS485:Changed Field: 9 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 10 Old: 0 New: 128
+INFO:sundanceRS485:Changed Field: 11 Old: 0 New: 44
+INFO:sundanceRS485:Changed Field: 12 Old: 0 New: 2
+INFO:sundanceRS485:Changed Field: 13 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 14 Old: 0 New: 122
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:122.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+INFO:sundanceRS485:Got assigned channel = 17
+INFO:sundanceRS485:CA[189, 0, 0, 60, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:sundanceRS485:temp2 Old 122.0  New 154.0 Temp1 91.0
+MQTT message received on topic: hottub/temperature_command_topic with value: 100.0
+N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py:69: DeprecationWarning: There is no current event loop
+  loop = asyncio.get_event_loop()
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:displayText 23 Current Temp 22 unknown
+INFO:sundanceRS485:Time: 2023-01-13 09:27:00
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 80, 23, 128, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 2 Old: 5 New: 37
+INFO:sundanceRS485:Changed Field: 13 Old: 23 New: 22
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:80.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 80.0 81.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:01
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 81, 23, 128, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 80 New: 81
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:81.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 81.0 82.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:01
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 82, 23, 128, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 81 New: 82
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:82.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 82.0 83.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:02
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 83, 23, 128, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 82 New: 83
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:83.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 83.0 84.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:02
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 84, 23, 128, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 83 New: 84
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:84.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 84.0 85.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:03
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 85, 23, 128, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 84 New: 85
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:85.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 85.0 86.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:04
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 86, 23, 128, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 85 New: 86
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:86.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 86.0 87.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:04
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 87, 23, 128, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 86 New: 87
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:87.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 87.0 88.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:05
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 88, 23, 128, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 87 New: 88
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:88.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 88.0 89.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:06
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 89, 23, 128, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 88 New: 89
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:89.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 89.0 90.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:06
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 90, 23, 128, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 89 New: 90
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:90.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 90.0 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:07
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 91, 23, 128, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 90 New: 91
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:91.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 91.0 92.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:07
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 92, 23, 128, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 91 New: 92
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:92.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:settemp 92.0 93.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:08
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 93, 23, 192, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 92 New: 93
+INFO:sundanceRS485:Changed Field: 10 Old: 128 New: 192
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:93.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 93.0 94.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:08
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 94, 23, 192, 44, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 93 New: 94
+INFO:sundanceRS485:1-13 9:44 P0:0 P1:0 Circ:1  settemp:94.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 94.0 95.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:09
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 95, 23, 192, 45, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 94 New: 95
+INFO:sundanceRS485:Changed Field: 11 Old: 44 New: 45
+INFO:sundanceRS485:1-13 9:45 P0:0 P1:0 Circ:1  settemp:95.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 95.0 96.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:10
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 96, 23, 192, 45, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 95 New: 96
+INFO:sundanceRS485:1-13 9:45 P0:0 P1:0 Circ:1  settemp:96.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 96.0 97.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:10
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 97, 23, 192, 45, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 96 New: 97
+INFO:sundanceRS485:1-13 9:45 P0:0 P1:0 Circ:1  settemp:97.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 05 10 BF FE 1D 10
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 97.0 98.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:12
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 98, 23, 192, 45, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 97 New: 98
+INFO:sundanceRS485:1-13 9:45 P0:0 P1:0 Circ:1  settemp:98.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 98.0 99.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:12
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 99, 23, 192, 45, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 98 New: 99
+INFO:sundanceRS485:1-13 9:45 P0:0 P1:0 Circ:1  settemp:99.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:queueing message: 7e0711bfcce100b47e
+DEBUG:sundanceRS485:sent
+DEBUG:sundanceRS485:settemp 99.0 100.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:13
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 37, 241, 69, 89, 32, 105, 100, 23, 192, 45, 2, 22, 122, 0]
+INFO:sundanceRS485:Changed Field: 8 Old: 99 New: 100
+INFO:sundanceRS485:1-13 9:45 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:91.0  heatstate:0  displayText:22 unknown  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:displayText 22 unknown 23 Current Temp
+INFO:sundanceRS485:Time: 2023-01-13 09:27:17
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 100, 23, 192, 45, 2, 23, 122, 0]
+INFO:sundanceRS485:Changed Field: 2 Old: 37 New: 5
+INFO:sundanceRS485:Changed Field: 13 Old: 22 New: 23
+INFO:sundanceRS485:1-13 9:45 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:91.0  heatstate:0  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:154.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 154.0  New 155.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:27:28
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 100, 23, 192, 45, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 122 New: 123
+INFO:sundanceRS485:1-13 9:45 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:91.0  heatstate:0  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=536, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 54886), raddr=('192.168.50.53', 8899)>
+Connected to MQTT.
+INFO:sundanceRS485:Active Channels:[16]
+INFO:sundanceRS485:Got assigned channel = 17
+DEBUG:sundanceRS485:circ_pump_status 0 1
+DEBUG:sundanceRS485:settemp 0.0 100.0
+DEBUG:sundanceRS485:curtemp 0.0 91.0
+DEBUG:sundanceRS485:heatstate 0 1
+DEBUG:sundanceRS485:displayText -1 unknown 23 Current Temp
+DEBUG:sundanceRS485:heatMode -1 unknown 32 AUTO
+DEBUG:sundanceRS485:month -1 1
+DEBUG:sundanceRS485:day -1 13
+DEBUG:sundanceRS485:autoCirc -1 1
+DEBUG:sundanceRS485:manualCirc -1 0
+DEBUG:sundanceRS485:temp2 Old -1  New 123.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:33:04
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 100, 23, 192, 50, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 0 Old: 0 New: 15
+INFO:sundanceRS485:Changed Field: 1 Old: 0 New: 96
+INFO:sundanceRS485:Changed Field: 2 Old: 0 New: 5
+INFO:sundanceRS485:Changed Field: 3 Old: 0 New: 241
+INFO:sundanceRS485:Changed Field: 4 Old: 0 New: 69
+INFO:sundanceRS485:Changed Field: 5 Old: 0 New: 89
+INFO:sundanceRS485:Changed Field: 6 Old: 0 New: 32
+INFO:sundanceRS485:Changed Field: 7 Old: 0 New: 105
+INFO:sundanceRS485:Changed Field: 8 Old: 0 New: 100
+INFO:sundanceRS485:Changed Field: 9 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 10 Old: 0 New: 192
+INFO:sundanceRS485:Changed Field: 11 Old: 0 New: 50
+INFO:sundanceRS485:Changed Field: 12 Old: 0 New: 2
+INFO:sundanceRS485:Changed Field: 13 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 14 Old: 0 New: 123
+INFO:sundanceRS485:1-13 9:50 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:123.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 123.0  New 155.0 Temp1 91.0
+INFO:sundanceRS485:CA[189, 0, 0, 60, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:sundanceRS485:temp2 Old 155.0  New 156.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:36:07
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 100, 23, 192, 53, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 124
+INFO:sundanceRS485:1-13 9:53 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 156.0  New 155.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:36:08
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 100, 23, 192, 53, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 124 New: 123
+INFO:sundanceRS485:1-13 9:53 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 155.0  New 156.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:36:10
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 100, 23, 192, 54, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 124
+INFO:sundanceRS485:1-13 9:54 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 156.0  New 155.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:36:10
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 100, 23, 192, 54, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 124 New: 123
+INFO:sundanceRS485:1-13 9:54 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 155.0  New 156.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:36:18
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 100, 23, 192, 54, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 124
+INFO:sundanceRS485:1-13 9:54 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 156.0  New 155.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:36:24
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 100, 23, 192, 54, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 124 New: 123
+INFO:sundanceRS485:1-13 9:54 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 155.0  New 156.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:36:32
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 96, 5, 241, 69, 89, 32, 105, 100, 23, 192, 54, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 124
+INFO:sundanceRS485:1-13 9:54 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+INFO:sundanceRS485:Got Button Press 229 228 : 7E 07 10 BF CC 63 87 D6 7E
+DEBUG:sundanceRS485:pump0 0 1
+INFO:sundanceRS485:Time: 2023-01-13 09:37:48
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 64, 21, 241, 69, 89, 32, 105, 100, 23, 192, 55, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 1 Old: 96 New: 64
+INFO:sundanceRS485:Changed Field: 2 Old: 5 New: 21
+INFO:sundanceRS485:1-13 9:55 P0:1 P1:0 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+INFO:sundanceRS485:Got Button Press 228 229 : 7E 07 10 BF CC 50 B5 8E 7E
+DEBUG:sundanceRS485:pump1 0 1
+INFO:sundanceRS485:Time: 2023-01-13 09:37:49
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 89, 32, 105, 100, 23, 192, 55, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 1 Old: 64 New: 68
+INFO:sundanceRS485:1-13 9:55 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 156.0  New 155.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:38:07
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 89, 32, 105, 100, 23, 192, 55, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 124 New: 123
+INFO:sundanceRS485:1-13 9:55 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 155.0  New 156.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:09
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 89, 32, 105, 100, 23, 192, 56, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 124
+INFO:sundanceRS485:1-13 9:56 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 156.0  New 155.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:09
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 89, 32, 105, 100, 23, 192, 57, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 124 New: 123
+INFO:sundanceRS485:1-13 9:57 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 155.0  New 156.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:29
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 89, 32, 105, 100, 23, 192, 57, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 124
+INFO:sundanceRS485:1-13 9:57 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 156.0  New 155.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:29
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 89, 32, 105, 100, 23, 192, 57, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 124 New: 123
+INFO:sundanceRS485:1-13 9:57 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:curtemp 91.0 92.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:35
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 94, 32, 105, 100, 23, 192, 57, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 5 Old: 89 New: 94
+INFO:sundanceRS485:1-13 9:57 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:92.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:curtemp 92.0 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:36
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 89, 32, 105, 100, 23, 192, 57, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 5 Old: 94 New: 89
+INFO:sundanceRS485:1-13 9:57 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 155.0  New 156.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:39
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 89, 32, 105, 100, 23, 192, 57, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 124
+INFO:sundanceRS485:1-13 9:57 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 156.0  New 155.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:39
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 89, 32, 105, 100, 23, 192, 57, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 124 New: 123
+INFO:sundanceRS485:1-13 9:57 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 155.0  New 156.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:39
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 89, 32, 105, 100, 23, 192, 57, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 124
+INFO:sundanceRS485:1-13 9:57 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 156.0  New 155.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:41
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 89, 32, 105, 100, 23, 192, 57, 2, 23, 123, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 124 New: 123
+INFO:sundanceRS485:1-13 9:57 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:155.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 155.0  New 156.0 Temp1 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:43
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 89, 32, 105, 100, 23, 192, 57, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 123 New: 124
+INFO:sundanceRS485:1-13 9:57 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:curtemp 91.0 92.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:44
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 94, 32, 105, 100, 23, 192, 57, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 5 Old: 89 New: 94
+INFO:sundanceRS485:1-13 9:57 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:92.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:curtemp 92.0 91.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:46
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 89, 32, 105, 100, 23, 192, 57, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 5 Old: 94 New: 89
+INFO:sundanceRS485:1-13 9:57 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:91.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:curtemp 91.0 92.0
+INFO:sundanceRS485:Time: 2023-01-13 09:39:52
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [15, 68, 21, 241, 69, 94, 32, 105, 100, 23, 192, 57, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 5 Old: 89 New: 94
+INFO:sundanceRS485:1-13 9:57 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:92.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 05 10 BF 7E 05 10
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 05 11 7E 05 10 BF
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 05 11 7E 05 11 BF
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 26 FF AF C4 5C 51 18 5D 56 42 5F AF 57 13 0C 53 6E 4F 24 4C 2E 4B 48 5E 46 87 44 45 7E 05 11 BF 06 37 7E 7E 05 10 BF
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 07 10 BF CC 52 B2 7E 05
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 26 FF AF C4 FF F2 BB FE F5 E1 FC 0C F4 B0 AF F0 CD EC 87 EF 8D E8 EB FD E5 24 E7 E6 E3 E0 7E 05 11 BF 06 37 7E 7E 05
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 05 11 BF 06 7E 05
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 07 10 BF CC 7E 05 11 BF
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 26 FF AF C4 22 2F 66 23 28 3C 21 D1 29 6D 72 7E 05 10 BF 06 5C 7E 7E 07 10 BF CC 77 97 A5 7E 7E 05 11 BF 06 37 7E 7E
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 75 61 7C 8C 74 30 2F 70 4D 6C 07 6F 0D 68 6B 7D 65 A4 67 66 63 60 63 75 01 7C 5F 5E 59 88 7E 7E 05 10 BF 06 5C 7E 7E 07 10 BF CC 8F 6F FF 7E 7E 05 11 BF 06 37 7E 7E 05 10 BF 06 5C 7E 7E 07 10 BF CC EA 0A 77 7E 7E 05 11 BF 06 37 7E 7E 05 10 BF 06 5C 7E 7E 07 10 BF CC 9F 7F D8 7E 7E 05 11 BF 06 37 7E 7E 05 10 BF 06 5C 7E 7E 07 10 BF CC 9F 7F D8 7E 7E 05
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 05 7E 05 10 BF 06
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 05 10 BF 7E 05 11
+ERROR:sundanceRS485:Message had bad CRC, discarding
+7E 26 FF AF C4 D5 D8 91 D4 DF CB D6 26 DE 9A 85 DA E7 C6 AD C5 A7 C2 C1 7E 05 11 BF 06 37 7E 7E 05 10 BF 06 5C 7E 7E 07
+DEBUG:sundanceRS485:temp2 Old 156.0  New 157.0 Temp1 92.0
+INFO:sundanceRS485:Time: 2023-01-13 09:44:44
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [12, 68, 21, 241, 69, 94, 32, 105, 100, 23, 192, 2, 2, 23, 125, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 124 New: 125
+INFO:sundanceRS485:1-13 10:2 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:92.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:157.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 157.0  New 156.0 Temp1 92.0
+INFO:sundanceRS485:Time: 2023-01-13 09:44:46
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [12, 68, 21, 241, 69, 94, 32, 105, 100, 23, 192, 2, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 125 New: 124
+INFO:sundanceRS485:1-13 10:2 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:92.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 156.0  New 157.0 Temp1 92.0
+INFO:sundanceRS485:Time: 2023-01-13 09:44:46
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [12, 68, 21, 241, 69, 94, 32, 105, 100, 23, 192, 2, 2, 23, 125, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 124 New: 125
+INFO:sundanceRS485:1-13 10:2 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:92.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:157.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 157.0  New 156.0 Temp1 92.0
+INFO:sundanceRS485:Time: 2023-01-13 09:44:50
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [12, 68, 21, 241, 69, 94, 32, 105, 100, 23, 192, 2, 2, 23, 124, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 125 New: 124
+INFO:sundanceRS485:1-13 10:2 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:92.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:156.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 156.0  New 157.0 Temp1 92.0
+INFO:sundanceRS485:Time: 2023-01-13 09:44:51
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [12, 68, 21, 241, 69, 94, 32, 105, 100, 23, 192, 2, 2, 23, 125, 0]
+INFO:sundanceRS485:Changed Field: 14 Old: 124 New: 125
+INFO:sundanceRS485:1-13 10:2 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:92.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:157.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+INFO:sundanceRS485:Got Button Press 229 228 : 7E 07 10 BF CC C2 26 B5 7E
+DEBUG:sundanceRS485:pump0 1 0
+INFO:sundanceRS485:Time: 2023-01-13 09:45:06
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [12, 68, 5, 241, 69, 94, 32, 105, 100, 23, 192, 2, 2, 23, 125, 0]
+INFO:sundanceRS485:Changed Field: 2 Old: 21 New: 5
+INFO:sundanceRS485:1-13 10:2 P0:0 P1:1 Circ:1  settemp:100.0  curtemp:92.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:157.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+INFO:sundanceRS485:Got Button Press 228 229 : 7E 07 10 BF CC 6D 88 2D 7E
+DEBUG:sundanceRS485:pump1 1 0
+INFO:sundanceRS485:Time: 2023-01-13 09:45:06
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [12, 64, 5, 241, 69, 94, 32, 105, 100, 23, 192, 2, 2, 23, 125, 0]
+INFO:sundanceRS485:Changed Field: 1 Old: 68 New: 64
+INFO:sundanceRS485:1-13 10:2 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:92.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:157.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:curtemp 92.0 93.0
+INFO:sundanceRS485:Time: 2023-01-13 09:49:56
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [12, 64, 5, 241, 69, 95, 32, 105, 100, 23, 192, 7, 2, 23, 125, 0]
+INFO:sundanceRS485:Changed Field: 5 Old: 94 New: 95
+INFO:sundanceRS485:1-13 10:7 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:93.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:157.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:curtemp 93.0 92.0
+INFO:sundanceRS485:Time: 2023-01-13 09:49:57
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [12, 64, 5, 241, 69, 94, 32, 105, 100, 23, 192, 7, 2, 23, 125, 0]
+INFO:sundanceRS485:Changed Field: 5 Old: 95 New: 94
+INFO:sundanceRS485:1-13 10:7 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:92.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:157.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:curtemp 92.0 93.0
+INFO:sundanceRS485:Time: 2023-01-13 09:50:04
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [12, 64, 5, 241, 69, 95, 32, 105, 100, 23, 192, 7, 2, 23, 125, 0]
+INFO:sundanceRS485:Changed Field: 5 Old: 94 New: 95
+INFO:sundanceRS485:1-13 10:7 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:93.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:157.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+INFO:sundanceRS485:Time: 2023-01-13 09:50:06
+INFO:sundanceRS485:Unknown Change: True        Full Message: C4: [12, 96, 5, 241, 69, 95, 32, 105, 100, 23, 192, 7, 2, 23, 125, 0]
+INFO:sundanceRS485:Changed Field: 1 Old: 64 New: 96
+INFO:sundanceRS485:1-13 10:7 P0:0 P1:0 Circ:1  settemp:100.0  curtemp:93.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:157.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa> python .\app.py
+v.2
+INFO:sundanceRS485:<asyncio.TransportSocket fd=520, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.50.22', 55074), raddr=('192.168.50.53', 8899)>
+Connected to MQTT.
+INFO:sundanceRS485:Active Channels:[16]
+DEBUG:sundanceRS485:pump0 0 1
+DEBUG:sundanceRS485:pump1 0 1
+DEBUG:sundanceRS485:circ_pump_status 0 1
+DEBUG:sundanceRS485:settemp 0.0 100.0
+DEBUG:sundanceRS485:curtemp 0.0 93.0
+DEBUG:sundanceRS485:heatstate 0 1
+DEBUG:sundanceRS485:displayText -1 unknown 23 Current Temp
+DEBUG:sundanceRS485:heatMode -1 unknown 32 AUTO
+DEBUG:sundanceRS485:month -1 1
+DEBUG:sundanceRS485:day -1 13
+DEBUG:sundanceRS485:autoCirc -1 1
+DEBUG:sundanceRS485:manualCirc -1 0
+DEBUG:sundanceRS485:temp2 Old -1  New 126.0 Temp1 93.0
+INFO:sundanceRS485:Time: 2023-01-13 10:23:41
+INFO:sundanceRS485:Unknown Change: False        Full Message: C4: [12, 68, 21, 241, 69, 95, 32, 105, 100, 23, 192, 40, 2, 23, 126, 0]
+INFO:sundanceRS485:Changed Field: 0 Old: 0 New: 12
+INFO:sundanceRS485:Changed Field: 1 Old: 0 New: 68
+INFO:sundanceRS485:Changed Field: 2 Old: 0 New: 21
+INFO:sundanceRS485:Changed Field: 3 Old: 0 New: 241
+INFO:sundanceRS485:Changed Field: 4 Old: 0 New: 69
+INFO:sundanceRS485:Changed Field: 5 Old: 0 New: 95
+INFO:sundanceRS485:Changed Field: 6 Old: 0 New: 32
+INFO:sundanceRS485:Changed Field: 7 Old: 0 New: 105
+INFO:sundanceRS485:Changed Field: 8 Old: 0 New: 100
+INFO:sundanceRS485:Changed Field: 9 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 10 Old: 0 New: 192
+INFO:sundanceRS485:Changed Field: 11 Old: 0 New: 40
+INFO:sundanceRS485:Changed Field: 12 Old: 0 New: 2
+INFO:sundanceRS485:Changed Field: 13 Old: 0 New: 23
+INFO:sundanceRS485:Changed Field: 14 Old: 0 New: 126
+INFO:sundanceRS485:1-13 10:40 P0:1 P1:1 Circ:1  settemp:100.0  curtemp:93.0  heatstate:1  displayText:23 Current Temp  heatMode:32 AUTO
+INFO:sundanceRS485:unknownCirc:1 temp2:126.0 UnknownField3:241  UnknownField9:23 UnknownField12:2
+DEBUG:sundanceRS485:temp2 Old 126.0  New 158.0 Temp1 93.0
+INFO:sundanceRS485:CA[189, 0, 0, 60, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0]
+INFO:sundanceRS485:Got assigned channel = 17
+WARNING:sundanceRS485:Found a channel conflict, getting a new channel
+INFO:sundanceRS485:Got assigned channel = 17
+Traceback (most recent call last):
+  File "N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa\app.py", line 382, in <module>
+    asyncio.run(start_app())
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 633, in run_until_complete
+    self.run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 600, in run_forever
+    self._run_once()
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1860, in _run_once
+    event_list = self._selector.select(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 439, in select
+    self._poll(timeout)
+  File "C:\Users\peter\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 788, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+KeyboardInterrupt
+PS N:\home\pi\sundance780-jacuzzi-balboa-rs485-tcp\pybalboa>

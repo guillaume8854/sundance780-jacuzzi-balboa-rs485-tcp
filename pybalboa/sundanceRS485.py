@@ -6,7 +6,7 @@ import warnings
 import queue
 import socket
 from socket import error as SocketError
-
+from datetime import datetime 
 try:
     from balboa import *
 except:
@@ -119,6 +119,10 @@ class SundanceRS485(BalboaSpaWifi):
         self.checkCounterL = 0
         self.CAprior_status = None
         self.lastRGBMode = "White"
+        self.lastBrightness = 100
+        
+        self.displayTextS = "unknown"    
+        self.heatModeText ="unknown"  
 
         self.HEAT_MODE_MAP = [
             [32,"AUTO"],
@@ -127,10 +131,12 @@ class SundanceRS485(BalboaSpaWifi):
         ]
 
         self.DISPLAY_MAP = [
+            [22,"Set Temp"], #Observed when changing themperature, then went back to 23
+            [23,"Current Temp"], #Previously Observed
             [36,"Current Temp"], #Previously Observed
             [32,"Current Temp"], 
             [31,"Current Temp"], #Observed while idle 
-            [30,"Set Temp"], #was 36,,,
+            [30,"Set Temp"],
             [35,"PF Set Primary Filtration"],
             [47,"SF Set Secondary Filtration"],
             [42,"HEAT Set Heat Mode"],
@@ -177,7 +183,7 @@ class SundanceRS485(BalboaSpaWifi):
             return False
         self.connected = True
         sock = self.writer.transport.get_extra_info('socket')
-        print(str(sock))
+        self.log.info(str(sock))
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         return True
 
@@ -200,7 +206,6 @@ class SundanceRS485(BalboaSpaWifi):
     async def change_pump(self, pump, newstate):
         """ Change pump #pump to newstate. """
         # sanity check
-        print("{} {}".format(self.pump_status[pump] , newstate))
         if (
             pump > MAX_PUMPS
             or newstate > self.pump_array[pump]
@@ -222,8 +227,8 @@ class SundanceRS485(BalboaSpaWifi):
             self.log.info("Tried to send CC message without having been assigned a channel")
             return
             
-        if self.attemptsToCommand > 16:
-            self.log.info("Tried {} times to change state {} giving up.", self.attemptsToCommand, val)
+        if self.attemptsToCommand > 64:
+            self.log.info("Tried {} times to change state {} giving up.".format( self.attemptsToCommand, val))
             
         # Exampl: 7E 07 10 BF CC 65 85 A6 7E 
         message_length = 7
@@ -260,130 +265,103 @@ class SundanceRS485(BalboaSpaWifi):
         01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29
         7E 26 FF AF C4 AE A7 AA AB A4 A1 C9 5D A5 A1 C2 A1 9C BD CE BB E2 B9 BB AD B4 B5 A7 B7 DF B1 B2 9B D3 8D 8E 8F 88 F9 7E
         """
+        self.lastC4MessageReceived = time.time()
         
-        #print ("".join(map("{:02X} ".format, bytes(data))))
-
-        
-        #"Decrypt" the message
+        #print ("".join(map("{:02X} ".format, bytes(data))))        
+        #"Decrypt" / Decode the message
         data = self.xormsg(data[5:len(data)-2])
 
-        #print ("x{}".format(data))
 
+
+        #print ("x{}".format(data))
 
         """Parse a status update from the spa.
         01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29
         [9, 0, 5, 148, 5, 99, 32, 124, 96, 23, 0, 33, 110, 39, 96, 0]
         """
  
-
-        # Check if the spa had anything new to say.
-        # This will cause our internal states to update once per minute due
-        # to the hour/minute counter.  This is ok.
-        have_new_data = False
-        if self.prior_status is not None:
-            for i in range(0, len(data)):
-                if data[i] != self.prior_status[i]:
-                    have_new_data = True
-                    break
-        else:
-            have_new_data = True
-            self.prior_status = bytearray(len(data))
- 
         HOUR_FIELD = 0 #XOR 6 to get 24hour time
-        HOUR_XOR = 6 #Need to xor the hour field with 6 to get actual hour
-        
-        self.time_hour = data[HOUR_FIELD]^HOUR_XOR
-
-        
-        MINUTE_FIELD = 11 #Ok as is
-        
-        self.time_minute = data[MINUTE_FIELD] 
- 
- 
         PUMP_FIELD_1 = 1 #Most bit data
+        DATE_FIELD_1 = 2 #Dont know how to use this yet...
+        UNKOWN_FIELD_3 = 3 #Always 145? MIght might be days untill water refresh, UV, or filter change
+        TBD_FIELD_4 = 4 #5 When Everything Off. 69 when clear ray / circ on?
+        TEMP_FIELD_1 = 5 #Devide by 2 if in C, otherwise F
+        HEAT_MODE_FIELD = 6 #
+        DATE_FIELD_2 = 7
+        SET_TEMP_FIELD = 8 #Devide by 2 if in C, otherwise F          
+        UNKOWN_FIELD_9 = 9 #Always 107? might be days untill water refresh, UV, or filter change  
+        HEATER_FIELD_1 = 10 #= 64 when Heat on        
+        MINUTE_FIELD = 11 #Ok as is      
+        UNKOWN_FIELD_12 = 12 #  Always 107? might be days untill water refresh, UV, or filter change           
+        DISPLAY_FIELD = 13        
+        TEMP_FEILD_2 = 14 #Appears to be 2nd temp sensor C  or F directly. Changes when pump is on!        
+
         PUMP_2_BIT_SHIFT = 2 #b100 When pump running
         PUMP_CIRC_BIT_SHIFT = 6 #b1000000 when pump running
         MANUAL_CIRC = 7 #b11000000 Includeding Pump Running
         AUTO_CIRC = 6 #b1100000 Includeding Pump Running
-        
-        self.pump_status[1] = (data[PUMP_FIELD_1] >> PUMP_2_BIT_SHIFT) & 1
-        
-        self.circ_pump_status = (data[PUMP_FIELD_1]>> PUMP_CIRC_BIT_SHIFT) & 1
-        self.pump_status[2] = self.circ_pump_status #Circ Pump is Controlable
-        self.autoCirc = (data[PUMP_FIELD_1] >> AUTO_CIRC) & 1  
-        self.manualCirc = (data[PUMP_FIELD_1] >> MANUAL_CIRC) & 1   
-        
-        
-   
-        TBD_FIELD_4 = 4 #5 When Everything Off. 69 when clear ray / circ on?
         TBD_4_CIRC_SHIFT = 6 #Field 4 goes up by 64 when circ is running it seems
-
-        self.unknownCirc = (data[TBD_FIELD_4] >> TBD_4_CIRC_SHIFT) & 1    
-
-   
-        SET_TEMP_FIELD = 8 #Devide by 2 if in C, otherwise F
-        settemp = float(data[SET_TEMP_FIELD])
-        self.settemp = settemp / (2 if self.tempscale == self.TSCALE_C else 1)
-        
-        
-        TEMP_FEILD_2 = 14 #Appears to be 2nd temp sensor C  or F directly. Changes when pump is on!
-        temp = float(data[TEMP_FEILD_2])
-        if(self.circ_pump_status == 1): #Unclear why this is ncessary
-            temp = temp + 32   
-        self.temp2 = temp #Hide the data here for now
-        
-        TEMP_FIELD_1 = 5 #Devide by 2 if in C, otherwise F
         TEMP_FIELD_1_xor = 2 #need to Xor this field by 2 to get actual temperature for some reason
+        HEATER_SHIFT_1 = 6 #b1000000 when Heat on
+        DAY_SHIFT =  3 #Shift date field 2 by this amount to get day of month
+        MONTH_AND = 7  #Shift date field 2 by this to get Month of year
+        #YEAR Dont have a guess yet
+        HOUR_XOR = 6 #Need to xor the hour field with 6 to get actual hour
+        
+
+        #High Confidance
+        time_hour = data[HOUR_FIELD]^HOUR_XOR
+        time_minute = data[MINUTE_FIELD]    
+        pump0 = (data[DATE_FIELD_1] >> 4) & 1           
+        pump1 = (data[PUMP_FIELD_1] >> PUMP_2_BIT_SHIFT) & 1     
+        circ_pump_status = (data[PUMP_FIELD_1]>> PUMP_CIRC_BIT_SHIFT) & 1
+        autoCirc = (data[PUMP_FIELD_1] >> AUTO_CIRC) & 1  
+        manualCirc = (data[PUMP_FIELD_1] >> MANUAL_CIRC) & 1       
+        settemp = float(data[SET_TEMP_FIELD])
+        settemp = settemp / (2 if self.tempscale == self.TSCALE_C else 1)               
         temp = data[TEMP_FIELD_1]^TEMP_FIELD_1_xor
-        self.curtemp = (
+        curtemp = (
             temp / (2 if self.tempscale == self.TSCALE_C else 1)
             if temp != 255
             else None
         )
-                      
-        HEATER_FIELD_1 = 10 #= 64 when Heat on
-        HEATER_SHIFT_1 = 6 #b1000000 when Heat on
-               
-        self.heatstate = (data[HEATER_FIELD_1] >> HEATER_SHIFT_1) & 1
-                
-                
-        HEATER_FIELD_2 = 11 #= 2 when Heat on
-        HEATER_SHIFT_1 = 1 #b10 when Heat on
         
-        self.heatState2  =  (data[HEATER_FIELD_2] >> HEATER_SHIFT_1) & 1  
-        
-        DISPLAY_FIELD = 13
-
-        #TODO Convert to text
-        self.displayText = data[DISPLAY_FIELD]
+        heatstate = (data[HEATER_FIELD_1] >> HEATER_SHIFT_1) & 1
+        displayText = data[DISPLAY_FIELD]        
+        heatMode = data[HEAT_MODE_FIELD]
+        day = (data[DATE_FIELD_2] >> DAY_SHIFT) 
+        month = (data[DATE_FIELD_2] & MONTH_AND) 
+      
  
-        HEAT_MODE_FIELD = 6 #
-
+        displayTextS = "unknown"
+        for x,y in self.DISPLAY_MAP:
+            if x == displayText:
+               displayTextS = y 
+               break
         
-        #TODO Convert to text
-        self.heatMode = data[HEAT_MODE_FIELD]
-       
-        DATE_FIELD_1 = 2 #Dont know how to use this yet...
-        DATE_FIELD_2 = 7
-        DAY_SHIFT =  3 #Shift date field 2 by this amount to get day of month
-        MONTH_AND = 7  #Shift date field 2 by this to get Month of year
-        #YEAR Dont have a guess yet
+        heatModeText = "unknown"
+        for x,y in self.HEAT_MODE_MAP:
+            if x == heatMode:
+               heatModeText = y 
+               break
         
-        self.day = (data[DATE_FIELD_2] >> DAY_SHIFT) 
-        self.month = (data[DATE_FIELD_2] & MONTH_AND) 
-        #TBD self.year = 
 
-        #TODO DOUBLE CHECK THIS!
-        self.pump_status[0] = (data[DATE_FIELD_1] >> 4) & 1
+ 
+        #Medium Confidance
+        unknownCirc = (data[TBD_FIELD_4] >> TBD_4_CIRC_SHIFT) & 1
+        temp2 = float(data[TEMP_FEILD_2])
+        if(self.circ_pump_status == 1): #Unclear why this is ncessary
+            temp2 = temp2 + 32   
+        temp2 = temp2 #Hide the data here for now   
+            
+        #Low Confidance
+        UnknownField3 = data[UNKOWN_FIELD_3]
+        UnknownField9 = data[UNKOWN_FIELD_9]       
+        UnknownField12 = data[UNKOWN_FIELD_12]     
 
-        UNKOWN_FIELD_3 = 3 #Always 145? MIght might be days untill water refresh, UV, or filter change
-        
-        self.UnknownField3 = data[UNKOWN_FIELD_3]
-        
-        UNKOWN_FIELD_9 = 9 #Always 107? might be days untill water refresh, UV, or filter change        
 
-        self.UnknownField9 = data[UNKOWN_FIELD_9]
-
+   
+   
         #FIND OUT IF OUR LAST COMMAND WORKED...
         if self.checkCounter > 0:
             self.checkCounter -= 1
@@ -410,17 +388,138 @@ class SundanceRS485(BalboaSpaWifi):
                     self.checkCounter = CHECKS_BEFORE_RETRY
                 elif self.pump_status[i] == self.target_pump_status[i]:
                     self.target_pump_status[i] = NO_CHANGE_REQUESTED
+
+
+
+        
+        displayNewData = False
+        unknownChange = True
+        if self.time_hour != time_hour:
+            unknownChange = False
+        if self.time_minute != time_minute:
+            unknownChange = False
+        if self.pump_status[0] != pump0:
+            displayNewData = True
+            self.log.debug("pump0 {} {}".format( self.pump_status[0], pump0))
+        if self.pump_status[1] != pump1:
+            displayNewData = True
+            self.log.debug("pump1 {} {}".format( self.pump_status[1], pump1))
+        if self.circ_pump_status != circ_pump_status:
+            displayNewData = True
+            self.log.debug("circ_pump_status {} {}".format( self.circ_pump_status, circ_pump_status))
+        if self.settemp != settemp:
+            displayNewData = True
+            self.log.debug("settemp {} {}".format( self.settemp, settemp))
+        if self.curtemp != curtemp:
+            displayNewData = True
+            self.log.debug("curtemp {} {}".format( self.curtemp, curtemp))
+        if self.heatstate != heatstate:
+            displayNewData = True
+            self.log.debug("heatstate {} {}".format( self.heatstate, heatstate))
+        if self.displayText != displayText:
+            displayNewData = True
+            self.log.debug("displayText {} {} {} {}".format( self.displayText, self.displayTextS, displayText,  displayTextS))
+        if self.heatMode != heatMode:
+            displayNewData = True
+            self.log.debug("heatMode {} {} {} {}".format( self.heatMode, self.heatModeText, heatMode,  heatModeText))
+        if self.month != month:
+            displayNewData = True
+            self.log.debug("month {} {}".format( self.month, month))
+        if self.day != day:
+            displayNewData = True
+            self.log.debug("day {} {}".format( self.day, day))
+        if self.autoCirc != autoCirc:
+            displayNewData = True
+            self.log.debug("autoCirc {} {}".format( self.autoCirc, autoCirc))
+        if self.manualCirc != manualCirc:
+            displayNewData = True
+            self.log.debug("manualCirc {} {}".format( self.manualCirc, manualCirc))
+        if self.temp2 != temp2:
+            displayNewData = True
+            self.log.debug("temp2 Old {}  New {} Temp1 {}".format( self.temp2, temp2, curtemp))
+
+        self.time_hour = time_hour
+        self.time_minute = time_minute
+        self.pump_status[0] = pump0
+        self.pump_status[1] = pump1
+        self.circ_pump_status = circ_pump_status
+        self.pump_status[2] = circ_pump_status
+        self.settemp = settemp
+        self.curtemp = curtemp
+        self.heatstate = heatstate
+        self.displayText = displayText
+        self.heatMode = heatMode
+        self.month = month
+        self.day = day
+        self.autoCirc = autoCirc
+        self.manualCirc = manualCirc       
+            
+        self.displayTextS = displayTextS    
+        self.heatModeText = heatModeText      
+
+
+        #Medium Confidance
+        self.unknownCirc = unknownCirc
+        self.temp2 = temp2  
+            
+        #Low Confidance
+        self.UnknownField3 = UnknownField3
+        self.UnknownField9 = UnknownField3           
+        self.UnknownField12  =  UnknownField12
+
+
+        # Check if any bytes changed
+        have_new_data = False
+        if self.prior_status is not None:
+            for i in range(0, len(data)):
+                if data[i] != self.prior_status[i]:
+                    have_new_data = True
+                    break
+        else:
+            have_new_data = True
+            self.prior_status = bytearray(len(data))
               
         if not have_new_data:
              return
              
-        self.log.info("C4{}".format(data))
+        self.lastupd = time.time()
+
+
+        if displayNewData:
+            unknownChange = False
+        if unknownChange or displayNewData:
+            self.log.info("Time: {}".format(datetime.fromtimestamp(self.lastupd).strftime("%Y-%m-%d %H:%M:%S") ))
+            self.log.info("Unknown Change: {}        Full Message: C4: {}".format(unknownChange, data))
+            for i in range(0, len(data)):
+                if(self.prior_status[i] != data[i]):
+                    self.log.info("Changed Field: {} Old: {} New: {}".format(i, self.prior_status[i], data[i]))
+            self.log.info("{}-{} {}:{} P0:{} P1:{} Circ:{}  settemp:{}  curtemp:{}  heatstate:{}  displayText:{} {}  heatMode:{} {}  ".format(month,day, time_hour,time_minute,pump0,pump1,circ_pump_status,settemp,curtemp,heatstate,displayText, self.displayTextS, heatMode, self.heatModeText))
+            self.log.info("unknownCirc:{} temp2:{} UnknownField3:{}  UnknownField9:{} UnknownField12:{} ".format(unknownCirc, temp2,UnknownField3,UnknownField9, UnknownField12))
+ 
+        # Check if any bytes changed
+        have_new_data = False
+        if self.prior_status is not None:
+            for i in range(0, len(data)):
+                if data[i] != self.prior_status[i]:
+                    have_new_data = True
+                    break
+        else:
+            have_new_data = True
+            self.prior_status = bytearray(len(data))
+              
+        if not have_new_data:
+             return
              
         self.lastupd = time.time()
-        # populate prior_status
+ 
+         # populate prior_status
         for i in range(0, len(data)):
             self.prior_status[i] = data[i]
+
         await self.int_new_data_cb()
+                     
+
+        
 
     async def parse_CA_light_status_update(self, data):
         """Parse a status update from the spa.
@@ -450,10 +549,15 @@ class SundanceRS485(BalboaSpaWifi):
         self.lightUnknown7 = data[7]
         self.lightUnknown9 = data[9]
         
-       
+        self.lightModeText = "unknown"
+        for x,y in self.LIGHT_MODE_MAP:
+            if x == self.lightMode:
+               self.lightModeText = y 
+               break   
+               
         if self.checkCounterL > 0:
             self.checkCounterL -= 1
-        
+            
         if (self.checkCounterL == 0):
             if(self.targetlightMode  != self.lightMode and self.targetlightMode != NO_CHANGE_REQUESTED):
                 await self.send_CCmessage(BTN_LIGHT_COLOR) 
@@ -464,7 +568,6 @@ class SundanceRS485(BalboaSpaWifi):
         if (self.checkCounterL == 0):
             if(self.targetlightBrightnes  != self.lightBrightnes and self.targetlightBrightnes != NO_CHANGE_REQUESTED):
                 await self.send_CCmessage(BTN_LIGHT_ON) 
-                print("brigtness button pressed")
                 self.checkCounterL = CHECKS_BEFORE_RETRY
             elif self.targetlightBrightnes  == self.lightBrightnes:
                 self.targetlightBrightnes = NO_CHANGE_REQUESTED                
@@ -571,7 +674,6 @@ class SundanceRS485(BalboaSpaWifi):
                 self.writer.write(data) 
                 await self.writer.drain()                   
             elif mtype == EXISTING_CLIENT_REQ:                      
-                print("Existing Client")
                 message_length = 8
                 data = bytearray(9)
                 data[0] = M_STARTEND
@@ -592,7 +694,7 @@ class SundanceRS485(BalboaSpaWifi):
                     #print("Discovered Channels:" + str(self.discoveredChannels))
                     #detec conflict
                     if data[2] == self.channel:
-                        print("Found a channel conflict, getting a new channel")
+                        self.log.warn("Found a channel conflict, getting a new channel")
                         self.channel = None
                         self.detectChannelState = DETECT_CHANNEL_STATE_START
                 elif channel == self.channel:
@@ -603,29 +705,27 @@ class SundanceRS485(BalboaSpaWifi):
                         msg = self.queue.get()
                         self.writer.write(msg)
                         await self.writer.drain()
-                        print("sent")
+                        self.log.debug("sent")
             else:
                 if (mtype == CC_REQ) or  (mtype == CC_REQ_ALT_17):
                     if not channel in  self.activeChannels:
                         self.activeChannels.append(data[2])
-                        print("Active Channels:" + str(self.activeChannels))
+                        self.log.info("Active Channels:" + str(self.activeChannels))
                     elif  self.detectChannelState < DETECT_CHANNEL_STATE_CHANNEL_NOT_FOUND:
                         self.detectChannelState += 1
-                        #print(self.detectChannelState)
                         if self.detectChannelState == DETECT_CHANNEL_STATE_CHANNEL_NOT_FOUND:
                             self.discoveredChannels.sort()
-                            #print("Discovered Channels:" + str(self.discoveredChannels))
                             for chan in self.discoveredChannels:
                                 if not chan in self.activeChannels:
                                     await self.setMyChan( chan)
                                     break
                     if (mtype == CC_REQ_ALT_17):
                         if (data[5]) != 0:
-                            self.log.warn("Got Button Press x".format(channel, mid, mtype) + "".join(map("{:02X} ".format, bytes(data))))
+                            self.log.info("Got Button Press x".format(channel, mid, mtype) + "".join(map("{:02X} ".format, bytes(data))))
                     if (mtype == CC_REQ):
                         buttondata = data[5]^data[6]
                         if buttondata != 224:
-                            self.log.warn("Got Button Press {} {} : ".format(data[5]^data[6]^1, buttondata) + "".join(map("{:02X} ".format, bytes(data))))
+                            self.log.info("Got Button Press {} {} : ".format(data[5]^data[6]^1, buttondata) + "".join(map("{:02X} ".format, bytes(data))))
                 elif (mtype > NOTHING_TO_SEND) :
                     self.log.warn("Unknown Message {:02X} {:02X} {:02X} x".format(channel, mid, mtype) + "".join(map("{:02X} ".format, bytes(data))))
               
@@ -694,21 +794,24 @@ class SundanceRS485(BalboaSpaWifi):
         return self.lightB 
          
     async def change_rgbbrightness(self, light, newstate):
-        if newstate < 15:
+        if newstate  < 16.5:
             newstate = 0
-        if newstate < 50:
+        elif newstate < 49.5:
             newstate = 33
+        elif newstate < 82.25:
+            newstate = 66
         else:
             newstate = 100
-        self.attemptsToCommand = 0    
+        self.attemptsToCommand = 0          
         self.targetlightBrightnes = newstate
    
     async def change_rgbmode(self, light, newstate):
-        self.attemptsToCommand = 0
-        
+        #cant change mode when off
+        if self.lightBrightnes == 0:
+            return            
+        self.attemptsToCommand = 0     
         newmode = -1
         for x,y in self.LIGHT_MODE_MAP:
             if y == newstate:
                 newmode = x 
-        print("RGBMode Change To: {} {} ".format(newmode,newstate))
         self.targetlightMode = newmode

@@ -698,43 +698,40 @@ class BalboaSpaWifi:
         if not self.connected:
             print("notconnected")
             return None
+            
 
-        try:
-            header = await self.reader.readexactly(2)
-        except SocketError as err:
-            if err.errno == errno.ECONNRESET:
-                self.log.error('Connection reset by peer')
-            elif err.errno == errno.EHOSTUNREACH:
-                self.log.error('Spa unreachable')
-            elif err.errno == errno.EPIPE:
-                self.log.error('Broken pipe')
-            else:
-                self.log.error('Spa socket error: {0}'.format(str(err)))
-            self.connected = False
-            await self.int_new_data_cb()
-            return None
-        except Exception as e:
-            self.log.error('Spa read failed: {0}'.format(str(e)))
-            return None
 
-        if header[0] == M_STARTEND:
-            if header[1] == M_STARTEND:
-                self.dropped = self.dropped + 1
-                tmp = await self.reader.readexactly(1)
-                header = bytes([ M_STARTEND, tmp[0]])
-                rlen = tmp[0]
-            else:
-                # header[1] is size, + checksum + M_STARTEND 
-                rlen = header[1]          
-        else:
-            if header[1] == M_STARTEND:
-                self.dropped = self.dropped + 1
-                tmp = await self.reader.readexactly(1)
-                header = bytes([ M_STARTEND, tmp[0]])
-                rlen = tmp[0]
-            else:
-                self.dropped = self.dropped + 2
+        headerFound = False
+        rlen = 0
+        while not headerFound or rlen == 0:     
+            try:
+                header = await self.reader.readexactly(1)
+            except SocketError as err:
+                if err.errno == errno.ECONNRESET:
+                    self.log.error('Connection reset by peer')
+                elif err.errno == errno.EHOSTUNREACH:
+                    self.log.error('Spa unreachable')
+                elif err.errno == errno.EPIPE:
+                    self.log.error('Broken pipe')
+                else:
+                    self.log.error('Spa socket error: {0}'.format(str(err)))
+                self.connected = False
+                await self.int_new_data_cb()
                 return None
+            except Exception as e:
+                self.log.error('Spa read failed: {0}'.format(str(e)))
+                return None
+            if header[0] == M_STARTEND:
+                if headerFound: 
+                    self.dropped += 1
+                headerFound = True              
+            elif headerFound and header[0] != M_STARTEND:
+                rlen = header[0]
+            else:
+                self.dropped += 1
+                
+                
+        header = bytes([ M_STARTEND, rlen])
 
         if rlen > 128:
             print("Length Too Long: {}",format(rlen))
