@@ -10,13 +10,13 @@ from datetime import datetime
 from collections import OrderedDict
 import json
 
-mqtt_host = "192.168.50.178" #os.environ.get("MQTT_HOST")
-mqtt_port = 1883 #int(os.environ.get("MQTT_PORT"))
-mqtt_user = "user" #os.environ.get("MQTT_USER")
-mqtt_password = "mqttuserx" #os.environ.get("MQTT_PASSWORD")
+mqtt_host = os.environ.get("MQTT_HOST")
+mqtt_port = int(os.environ.get("MQTT_PORT"))
+mqtt_user = os.environ.get("MQTT_USER")
+mqtt_password = os.environ.get("MQTT_PASSWORD")
 
-serial_ip = "192.168.50.53" #os.environ.get("SERIAL_IP")
-serial_port = 8899 #int(os.environ.get("SERIAL_PORT"))
+serial_ip = os.environ.get("SERIAL_IP")
+serial_port = int(os.environ.get("SERIAL_PORT"))
 
 base_topic = "homeassistant"
 flora_name = "hottub"
